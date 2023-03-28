@@ -47,6 +47,24 @@ func NewSquare(bgc color.RGBA, h, w int, x, y, step float64) *Square {
 	}
 }
 
+func (s *Square) CollisionDetection2(w, h float64) {
+	x, y := s.x+s.stepX, s.y+s.stepY // 小球下一步位置坐标
+	log.Printf("x[%f]y[%f]", x, y)
+	if x <= 0 {
+		s.stepX *= -1
+	} else if x+s.w >= w {
+		s.stepX *= -1
+	} else if y <= 0 {
+		s.stepY *= -1
+	} else if y+s.h >= h {
+		s.stepY *= -1
+	}
+	tx, ty := s.stepX, s.stepY
+	s.x += tx
+	s.y += ty
+	s.Opts.GeoM.Translate(tx, ty)
+}
+
 func (s *Square) CollisionDetection(w, h float64) {
 	x, y := s.x+s.stepX, s.y+s.stepY // 小球下一步位置坐标
 	tx, ty := s.stepX, s.stepY
@@ -55,7 +73,8 @@ func (s *Square) CollisionDetection(w, h float64) {
 		ty = tx * math.Tan(s.angle) // y轴镜像反射
 		s.stepX *= -1               // x轴转向
 	} else if x >= w {
-		tx = -(w - s.x)
+		//tx = -(w - s.x)
+		tx = -s.x
 		ty = tx * math.Tan(s.angle)
 		s.stepX *= -1
 	} else if y <= 0 {
@@ -63,7 +82,8 @@ func (s *Square) CollisionDetection(w, h float64) {
 		tx = ty / math.Tan(s.angle)
 		s.stepY *= -1
 	} else if y >= h {
-		ty = -(h - s.y)
+		//ty = -(h - s.y)
+		ty = -s.y
 		tx = ty / math.Tan(s.angle)
 		s.stepY *= -1
 	}

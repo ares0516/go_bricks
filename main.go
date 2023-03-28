@@ -30,7 +30,7 @@ func (g *MyGame) Update() error {
 	}
 
 	if g.ball.IsRun {
-		g.ball.CollisionDetection(float64(g.screenWidth), float64(g.screenHeight))
+		g.ball.CollisionDetection2(float64(g.screenWidth), float64(g.screenHeight))
 	}
 
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
@@ -56,7 +56,8 @@ func (g *MyGame) Draw(screen *ebiten.Image) {
 func main() {
 	game := NewMyGame()
 	//                                颜色       高度   宽度   中心点x    中心点y  步长
-	game.ball = component.NewSquare(define.Red, 5, 5, 157.5, 225, 3)
+	//game.ball = component.NewSquare(define.Red, 240, 320, 157.5, 225, 2)
+	game.ball = component.NewSquare(define.Red, 240, 320, 0, 0, 20)
 
 	ebiten.SetWindowTitle("SNAKE")
 

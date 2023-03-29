@@ -6,6 +6,7 @@ import (
 	"log"
 	"math"
 	"math/rand"
+	"strconv"
 )
 
 type Square struct {
@@ -154,4 +155,24 @@ func (s *Square) Move(w int, step float64, ball *Square) {
 		ball.Opts.GeoM.Translate(step, 0)
 		ball.x += step
 	}
+}
+
+// HitDetection 碰撞检测，是否撞击到奖励。撞击到奖励后，奖励消失，分数增加
+func (s *Square) HitDetection(awards *[]*Square) {
+	for i := 0; i < len(*awards); i++ {
+		award := (*awards)[i]
+		if math.Abs(s.x-award.x) <= s.w && math.Abs(s.y-award.y) <= s.h {
+			*awards = append((*awards)[0:i], (*awards)[i+1:]...)
+			i--
+			s.score += 10
+		}
+	}
+}
+
+func (s *Square) IsAlive() bool {
+	return s.alive
+}
+
+func (s *Square) GetScore() string {
+	return strconv.Itoa(s.score)
 }

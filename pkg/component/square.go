@@ -66,8 +66,8 @@ func (s *Square) CollisionDetection3(w, h float64, board *Square) {
 	} else if y <= 0 {
 		s.stepY *= -1
 		log.Printf("window top")
-	} else if (x+s.w >= board.x) && (x <= board.x+board.w) && y+s.h >= board.y { // 小球与板子上表面发生碰撞
-		// 小球右侧坐标大于等于板子左侧坐标，小球左侧坐标小于等于板子右侧坐标，小球下侧坐标小于等于板子上侧坐标
+	} else if (x+s.w >= board.x) && (x <= board.x+board.w) && y+s.h >= board.y && y <= board.y { // 小球下一步位置坐标包含板子上表面
+		// 小球右侧坐标大于等于板子左侧坐标，小球左侧坐标小于等于板子右侧坐标，小球下侧坐标小于等于板子上侧坐标，小球上侧坐标大于等于板子上侧坐标
 		s.score++
 		s.stepY *= -1
 		log.Printf("board top")

@@ -11,11 +11,12 @@ import (
 import "image/color"
 
 type MyGame struct {
-	screenWidth, screenHeight int
-	ball                      *component.Square
-	board                     *component.Square
-	awards                    []*component.Square
-	cls                       chan int
+	screenWidth  int
+	screenHeight int
+	ball         *component.Square
+	board        *component.Square
+	awards       []*component.Square
+	cls          chan int
 }
 
 func NewMyGame() *MyGame {
@@ -42,6 +43,7 @@ func (g *MyGame) Update() error {
 	if ebiten.IsKeyPressed(ebiten.KeyLeft) {
 		g.board.Move(g.screenWidth, -5, g.ball)
 	}
+
 	if ebiten.IsKeyPressed(ebiten.KeyRight) {
 		g.board.Move(g.screenWidth, 5, g.ball)
 	}
@@ -49,7 +51,7 @@ func (g *MyGame) Update() error {
 	return nil
 }
 
-// 在屏幕上绘制游戏内容
+// Draw 在屏幕上绘制游戏内容
 func (g *MyGame) Draw(screen *ebiten.Image) {
 	// 绘制黑色背景
 	screen.Fill(color.RGBA{0, 0, 0, 255})
@@ -69,7 +71,7 @@ func (g *MyGame) Draw(screen *ebiten.Image) {
 }
 
 func (g *MyGame) AwardGenerator() {
-	ticker := time.NewTicker(5 * time.Second)
+	ticker := time.NewTicker(1 * time.Second)
 	for {
 		select {
 		case <-ticker.C:
